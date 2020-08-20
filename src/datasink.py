@@ -30,6 +30,12 @@ class DataSink:
             # chache is full and will be written in data sink
             self._write_cache_in_sink()
 
+    def get_unique_addresses_counter(self):
+        if self.use_cache:
+            # empty the cache and update the unique address counter
+            self._write_cache_in_sink()
+        return self.unique_address_counter
+
     def _write_cache_in_sink(self):
         unique_addresses_in_cache = 0
         for ip in self.cache:
