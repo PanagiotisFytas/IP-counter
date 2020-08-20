@@ -3,9 +3,10 @@ from ipaddress import IPv4Address
 from fastapi import FastAPI, Request, Response
 from datasink import DataSink
 
+
 class Item(BaseModel):
     timestamp: str
-    ip: str
+    ip: IPv4Address
     url: str
 
 
@@ -17,8 +18,9 @@ app.state.sink = DataSink(max_cache_size=CACHE_SIZE)
 @app.post("/logs", status_code=200)
 def post_log_message(item: Item, request: Request, response: Response):
     try:
-        request.app.state.sink.write(item.ip) # write the ip address in the data sink
-        msg = {"message": "IP registered", "ip": item.ip}
+        ip = str(item.ip)
+        request.app.state.sink.write(ip) # write the ip address in the data sink
+        msg = {"message": "IP registered", "ip": ip}
     except Exception as e:
         msg = {"message": "POST Request failed", "error message": str(e)}
         response.status_code = 500 # Internal Server Error
