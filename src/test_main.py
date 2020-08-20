@@ -8,7 +8,7 @@ test_request = { "timestamp": "2020-06-24T15:27:00.123456Z",
                      "url": "some/url" 
                }
     
-ip_to_test = ["83.150.59.250", "83.150.59.251", "83.150.59.250", "83.150.59.250"
+ip_to_test = ["83.150.59.250", "83.150.59.251", "83.150.59.250", "83.150.59.250",
               "83.150.59.252", "83.150.59.251"]
 
 def test_post_log_message():
@@ -31,4 +31,10 @@ def test_get_count():
     response = client.get("/visitors")
     assert response.status_code == 200
     assert response.json() == {"Unique IP addresses": 3}
+
+def test_ip_error():
+    test_request['ip'] = ['not-an-ip']
+    response = client.post("/logs", json=test_request)
+    assert response.status_code == 422
+        
 
