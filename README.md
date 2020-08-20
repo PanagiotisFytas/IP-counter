@@ -3,12 +3,15 @@ A microservice for counting unique IP addresses
 
 # Endpoints
 
-- *GET*: For the getting unique visitor count  the endpoint is http://localhost:5000/visitors
+- *GET*: For the getting unique visitor count  the endpoint is http://localhost:5000/visitors. The return on a get is json message with the following format:
+```json
+{"Unique IP addresses": "5"}
+```
 - *POST*: For logging a new visit the endpoint is http://localhost:5000/logs. The api accepts json messages of
 the following format:
 
 ```json
-{ "timestamp": "2020-06-24T15:27:00.123456Z", "ip": "83.150.59.250", "url": ... }
+{ "timestamp": "2020-06-24T15:27:00.123456Z", "ip": "83.150.59.250", "url": "..." }
 ```
 
 ## Running the service
@@ -30,11 +33,13 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 uvicorn main:app --reload --port 5000
 ```
 
-### Testing API
+### Testing the API
 
 - In order to run the unitests run:
 
 ```bash
 pytest
 ```
+
+
 
