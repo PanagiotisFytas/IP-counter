@@ -3,7 +3,6 @@ from ipaddress import IPv4Address
 from fastapi import FastAPI, Request, Response
 from datasink import DataSink
 
-
 class Item(BaseModel):
     timestamp: str
     ip: str
