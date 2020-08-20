@@ -1,7 +1,7 @@
 # IP-counter
 A microservice for counting unique IP addresses
 
-# Endpoints
+## Endpoints
 
 - *GET*: For the getting unique visitor count  the endpoint is http://localhost:5000/visitors. The return on a get is json message with the following format:
 ```json
@@ -35,11 +35,35 @@ uvicorn main:app --reload --port 5000
 
 ### Testing the API
 
-- In order to run the unitests run:
+In order to run the unitests run:
 
 ```bash
 pytest
 ```
+### Benchmarking the API
+
+#### Generating URLS
+
+In order to generate multiple POST request (to be used for benchmarking with `siege`) run the following script (located in the `src` folder):
+
+```bash
+python url_generator.py > /path/to/url_files.txt
+```
+
+Do not forget to replace the path above with an actual path.
+
+This number of requests with unique IP addresses can be specified from the `number_of_requests` static variable from within the script.
+
+### Installing siege
+
+Install siege with the following command for ubuntu:
+
+```bash
+sudo apt-get install siege
+```
+
+
+
 
 
 
