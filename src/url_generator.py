@@ -33,8 +33,10 @@ if __name__ == "__main__":
 
     # get_endpoint = base_url + '/visitors'
     post_endpoint = base_url + '/logs'
+    # generate different ip addresses
     ip_addresses = generate_ip_addresses(number_of_requests)
 
+    # print them
     urls = generate_post_options(post_endpoint, ip_addresses)
     for url in urls:
         print(url)

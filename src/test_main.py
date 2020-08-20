@@ -33,6 +33,7 @@ def test_get_count():
     assert response.json() == {"Unique IP addresses": 3}
 
 def test_ip_error():
+    # test error is returns on wrong ip adresses (only IPV4 supported)
     test_request['ip'] = ['not-an-ip']
     response = client.post("/logs", json=test_request)
     assert response.status_code == 422
