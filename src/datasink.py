@@ -24,3 +24,14 @@ class DataSink:
             self.cache = set()
             self.max_cache_size = max_cache_size
 
+    def _write_cache_in_sink(self):
+        unique_addresses_in_cache = 0
+        for ip in self.cache:
+            if ip not in self.sink:
+                unique_addresses_in_cache += 1
+                self.sink[ip] = None  # empty values
+        self.sink.sync()
+        # update the total unique IP address counter
+        self.unique_address_counter += unique_addresses_in_cache
+
+
