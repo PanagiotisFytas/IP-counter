@@ -1,5 +1,6 @@
 import shelve
 import os
+import threading
 
 class DataSink:
     def __init__(self, max_cache_size=10000):
@@ -9,6 +10,8 @@ class DataSink:
         :return: an instance of the DataSink
         """
         self.unique_address_counter = 0
+
+        self.lock = threading.Lock()
 
         try:
             # remove the sink to achieve consistency only since
@@ -41,10 +44,11 @@ class DataSink:
         :return None
         """
         if self.use_cache:
-            self.cache.add(ip)
-            if len(self.cache) == self.max_cache_size:
-                # chache is full and will be written in data sink
-                self._write_cache_in_sink()
+            with self.lock:
+                self.cache.add(ip)
+                if len(self.cache) == self.max_cache_size:
+                    # chache is full and will be written in data sink
+                    self._write_cache_in_sink()
         else:
             self._write_in_sink(ip)
 
@@ -56,7 +60,8 @@ class DataSink:
         """
         if self.use_cache:
             # empty the cache and update the unique address counter
-            self._write_cache_in_sink()
+            with self.lock:
+                self._write_cache_in_sink()
         return self.unique_address_counter
 
     def _write_cache_in_sink(self):
