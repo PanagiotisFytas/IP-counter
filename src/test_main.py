@@ -9,10 +9,10 @@ def test_post_log_message():
                      "url": "some/url" 
                    }
     response = client.post("/logs", json=test_request)
-    assert response.status_code == 201
+    assert response.status_code == 200
     assert response.json() == {"message": "IP registered", "ip": "83.150.59.250"}
 
 def test_get_count():
     response = client.get("/visitors")
     assert response.status_code == 200
-    assert response.json() == {"non_unique_count": 0}
+    assert response.json() == {"Unique IP addresses": 1}
