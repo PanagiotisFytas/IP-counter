@@ -24,6 +24,12 @@ class DataSink:
             self.cache = set()
             self.max_cache_size = max_cache_size
 
+    def write(self, ip):
+        self.cache.add(ip)
+        if self.use_cache and len(self.cache) == self.max_cache_size:
+            # chache is full and will be written in data sink
+            self._write_cache_in_sink()
+
     def _write_cache_in_sink(self):
         unique_addresses_in_cache = 0
         for ip in self.cache:
